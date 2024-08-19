@@ -1,0 +1,123 @@
+.page-background{
+    background-image: url('../../../assets/images/igs-background2.png');
+}
+
+.limiter {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.btn-border-radius {
+    border-radius: 25px !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+}
+
+input[type=text].input100, input[type=text]:not(.browser-default).input100, input[type=password].input100, input[type=password]:not(.browser-default).input100, input[type=email].input100, input[type=email]:not(.browser-default).input100 {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    display: block;
+    width: calc(100% - 43px);
+    height: 45px;
+    background: transparent;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: transparent;
+    padding: 0 5px 0 38px;
+    border-bottom: 2px solid rgba(255,255,255,0.24);
+    -webkit-transition: all .4s;
+    -o-transition: all .4s;
+    -moz-transition: all .4s;
+    transition: all .4s;
+}
+
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: 0;
+    height: 3rem;
+    width: 100%;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transition: border .3s,-webkit-box-shadow .3s;
+    transition: border .3s,-webkit-box-shadow .3s;
+    transition: box-shadow .3s,border .3s;
+    transition: box-shadow .3s,border .3s,-webkit-box-shadow .3s;
+}
+
+input[type=text], input[type=text]:not(.browser-default), input[type=password], input[type=password]:not(.browser-default) {
+    outline: 0;
+    margin-bottom: 0;
+}
+
+.gradient-background{
+    background:-webkit-linear-gradient(top,#013e51,#0085af)
+}
+
+.img-logo{
+    width: 220px !important;
+
+    img {
+        width: 300px;
+        border-radius: 0%;
+    }
+}
+
+.title-container {
+    margin-top: 0px;
+    text-align: left;
+
+    .title-big{
+        font-size:25px
+    }
+
+    .title-hint{
+        font-size: 13px;
+        font-weight: normal;
+    }
+}
+
+.font-16{
+    font-size: 16px;
+}
+
+.btn-submit{
+    background-color: #f99d26 !important;
+    border-color: #f99d26 !important;
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    color: white !important;
+    font-weight: bold;
+}
+
+.hint-btn-container{
+    margin-top: -20px;
+
+    a{
+        font-size: 15px;
+        color: white;
+    }
+}

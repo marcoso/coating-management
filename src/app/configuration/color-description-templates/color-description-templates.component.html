@@ -1,0 +1,84 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2><b>Configuration</b></h2>                
+			</div>
+            <div class="header">
+                <h3 class="sub-title">Color Description Templates</h3>
+                <button type="button" class="btn btn-outline-success btn-add-color-template" (click)="addColorDescriptionTemplate()">
+                    <i class="material-icons icon-add-template">add</i>Add Color Description Template</button>
+            </div>	            
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-12">
+                    <div class="card">
+                        <div class="row mt-4" *ngFor="let colorTemplate of colorTemplates.value | async">
+                            <div class="header col-3">
+                                <h3 class="template-name">Template: {{colorTemplate.name}}</h3>                                
+                            </div>
+                            <div class="header col-3">      
+                                <button type="button" class="btn btn-outline-info btn-edit-color-template" (click)="editColorDescriptionTemplate(colorTemplate.colorTemplateId)"><i class="material-icons icon-edit-color-template">edit</i>Edit Template</button>                          
+                                <button type="button" class="btn btn-outline-danger btn-delete-color-template" (click)="deleteColorDescriptionTemplate(colorTemplate.colorTemplateId)"><i class="material-icons icon-delete-color-template">delete</i>Delete Template</button>
+                            </div>
+    
+                            <div class="row">
+    
+                                <div class="col-10">
+                                    <h3 class="parameter-title">Parameters</h3>
+    
+                                    <div class="table-responsive parameters-container">
+                                        <table class="table table-bordered  table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center">Color</th>
+                                                    <th class="center">Hex</th>
+                                                    <th class="center">Range</th>
+                                                    <th class="center">Reference</th>
+                                                    <th class="center" *ngIf="(colorTemplate.parametersSubject?.value | async)?.length > 0"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngIf="(colorTemplate.parametersSubject?.value | async)?.length === 0">
+                                                    <td colspan="5" class="center">No parameters found</td>
+                                                </tr>
+                                                <tr *ngFor="let parameter of colorTemplate.parametersSubject?.value | async">
+                                                    <td class="center">
+                                                        <div class="parameter-color-container">
+                                                            <div [style.background-color]="parameter.color" class="parameter-color"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="center">
+                                                        <div>
+                                                            {{parameter.color}}
+                                                        </div>                                                        
+                                                    </td>
+                                                    <td class="center">{{parameter.minValue | range: parameter.minValue : parameter.maxValue}}</td>
+                                                    <td class="center">{{parameter?.reference}}</td>
+                                                    <td class="center">
+                                                        <a class="btn btn-tbl-edit btn-edit" (click)="editParameter(colorTemplate.colorTemplateId, parameter.colorTemplateParamId)">
+                                                            <i class="material-icons" >remove_red_eye</i>
+                                                        </a>
+                                                        <a class="btn btn-tbl-edit btn-delete" (click)="deleteParameter(colorTemplate.colorTemplateId, parameter.colorTemplateParamId)">
+                                                            <i class="material-icons" >delete</i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+    
+                                    <div class="mt-0">
+                                        <div class="add-parameter-container">
+                                            <button type="button" class="btn btn-outline-success btn-add-parameter" (click)="addParameter(colorTemplate.colorTemplateId)"><i class="material-icons icon-add-parameter">add</i>Add Parameter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</section>

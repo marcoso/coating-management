@@ -1,0 +1,44 @@
+<div class="limiter">
+    <div class="container-login100 page-background">
+        <div class="wrap-login100 gradient-background">
+            <form [formGroup]="loginForm" class="login100-form validate-form" (ngSubmit)="onSubmit()">
+                <span class="login100-form-logo img-logo">
+                    <img alt="" src="../../assets/images/igs-logo-white.png">
+                </span>
+                <span class="login100-form-title p-b-34 p-t-27 title-container">
+                    <h2 class="title-big">Log in</h2>
+                    <h2 class="title-hint">Enter your username and password to access your acccount</h2>
+                </span>
+                <div class="wrap-input100">
+                    <input formControlName="email" class="input100 font-16" type="text" name="email" placeholder="Username">
+                    <i class="material-icons focus-input1001">person</i>
+                </div>
+                <div class="wrap-input100">
+                    <input formControlName="password" class="input100 font-16" type="password" name="pass" placeholder="Password">
+                    <i class="material-icons focus-input1001">lock</i>
+                </div>
+                <div class="contact100-form-checkbox">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value=""> Remember me
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mb-3 mt-0">{{error}}</div>
+                <div class="container-login100-form-btn">
+                    <a class="txt1" href="_home.html">
+                        <button type="submit" class="btn btn-outline-danger btn-border-radius btn-submit">LOGIN</button>
+                    </a>
+                </div>
+                <div class="text-center p-t-50 hint-btn-container">
+                    <a class="txt1" routerLink="/authentication/forgot-password">
+                        Forgot your Password?
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

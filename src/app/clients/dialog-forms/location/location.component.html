@@ -1,0 +1,51 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Location</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #locationForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Location Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.name" name="locationName" required>                                                    
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Main Contact</mat-label>
+                                                    <input matInput [(ngModel)]="model.mainContact" name="mainContact" required>                                                    
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="model" [disabled]="!locationForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,152 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Equipment</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #equipmentForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Equipment Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.name" name="equipmentName" required>                                                    
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Type</mat-label>
+                                                        <mat-select name="equipmentType" [(ngModel)]="model.type" (selectionChange)="onChange($event)" required>                                                          
+                                                          <mat-option *ngFor="let type of equipmentTypeKeys" [value]="type">
+                                                            {{type | equipmentTypes}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="model.type === 0">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Sub Type</mat-label>
+                                                        <mat-select #boilerSubTypeDropdown name="equipmentBoilerSubType" [(ngModel)]="model.subType" (selectionChange)="onBoilerSubTypeChange($event)" required>                                                            
+                                                          <mat-option *ngFor="let type of boilerSubTypeKeys" [value]="type">
+                                                            {{type | boilerSubTypes}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="model.type === 1">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Sub Type</mat-label>
+                                                        <mat-select #vesselSubTypeDropdown name="equipmentVesselSubType" [(ngModel)]="model.subType" (selectionChange)="onVesselSubTypeChange($event)" required>                                                          
+                                                          <mat-option *ngFor="let type of vesselSubTypeKeys" [value]="type">
+                                                            {{type | vesselSubTypes}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="(model.type === 0 && model.subType === 3) || (model.type === 1 && model.subType === 6)">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Sub Type Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.subTypeName" name="subTypeName" required>                                                    
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="outline">
+                                                    <mat-label>Equipment date</mat-label>
+                                                    <input matInput name="equipmentDate" [(ngModel)]="model.equipmentDate" [matDatepicker]="equipmentDatePicker" required>
+                                                    <mat-datepicker-toggle matSuffix [for]="equipmentDatePicker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #equipmentDatePicker></mat-datepicker>
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Scope Description</mat-label>
+                                                    <textarea matInput [(ngModel)]="model.scopeDescription" name="scopeDescription" required></textarea>                                                   
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="showColorTemplate">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                                  
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                      <mat-label class="equipment-label">Color Template</mat-label>
+                                                      <mat-select name="colorTemplate" [(ngModel)]="colorTemplateId" (selectionChange)="templateChange($event)" required>                                                          
+                                                        <mat-option *ngFor="let template of colorDescriptionTemplates | async" [value]="template.colorTemplateId">
+                                                          {{template.name}}
+                                                        </mat-option>                                                          
+                                                      </mat-select>
+                                                  </mat-form-field>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="showColorTemplate && colorTemplateId">
+                                        <div class="col-sm-12">
+                                            <h3 class="color-descriptions">Color Descriptions</h3>
+                                            <div class="color-descriptions-title-container">
+                                                <div class="container-params">
+                                                    <h2>Parameters</h2>
+                                                    <h2 class="font-normal" *ngFor="let parameter of colorTemplateParams | async"><div [style.background-color]="parameter?.color"></div>{{parameter?.minValue | range: parameter?.minValue : parameter?.maxValue}}</h2>                                    
+                                                </div>
+                                                <div class="container-ref">
+                                                    <h2>Reference</h2>
+                                                    <h2 class="font-normal" *ngFor="let parameter of colorTemplateParams | async"><div *ngIf="parameter?.reference" [style.background-color]="parameter?.color"></div>{{parameter?.reference}}</h2>                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="getModel()" [disabled]="!equipmentForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

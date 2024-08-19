@@ -1,0 +1,70 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Parameter</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #parameterForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Color</mat-label>
+                                                    <input matInput type="text" [value]="model.color" [cpOutputFormat]="'hex'" [cpPosition]="'top-right'"
+                                                      [(colorPicker)]="model.color" [cpAlphaChannel]="'disabled'" [cpDisableInput]="true" [(ngModel)]="model.color" name="color">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Range min value</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.minValue" name="minValue" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Range max value</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.maxValue" name="maxValue" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">                                                
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Reference</mat-label>
+                                                    <input matInput [(ngModel)]="model.reference" name="reference">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>                                                                             
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="model" [disabled]="!parameterForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

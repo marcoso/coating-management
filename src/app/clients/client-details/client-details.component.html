@@ -1,0 +1,139 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h3 class="title-colored">Client <b class="title">Details</b></h3>
+                <button type="button" class="btn btn-outline-info" (click)="editClient()">
+                    <i class="material-icons">edit</i>EDIT</button>
+			</div>
+            <div class="body">
+                <div class="client-details">
+                    <div class="details-container">
+                        <h2>Name</h2>
+                        <h2 class="field-detail">{{clientModel.name}}</h2>
+                    </div>
+                    <div class="details-container">
+                        <h2>Status</h2>
+                        <h2 class="field-detail">                            
+                            <div *ngIf="clientModel.isActive" class="badge col-blue status-active">ACTIVE</div>							   
+                            <div *ngIf="!clientModel.isActive" class="badge col-blue status-inactive">INACTIVE</div>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="header">
+                <h2><b>Locations</b></h2>
+                <button type="button" class="btn btn-outline-success" (click)="addNewLocation()">
+                    <i class="material-icons">add</i>ADD LOCATION</button>
+            </div>	
+
+            <!-- Locations -->
+            
+            <div *ngFor="let location of locations.value | async" class="location-container">
+                <div class="row">
+                    <div>
+                        <div class="header top-margin-20">
+                            <h3 class="location-name">{{location.name}}</h3>
+                        </div>
+        
+                        <div class="row-container">
+                            <div class="field-container">
+                                <h2>Main Contact</h2>
+                                <h2 class="field-detail">{{location.mainContact ? location.mainContact : '-'}}</h2>
+                            </div>
+                            <div class="field-container">
+                                <h2>Number of Equipment</h2>
+                                <h2 class="field-detail">{{(location.equipments.value | async)?.length}}</h2>
+                            </div>
+                            <div class="field-button-container">
+                                <button type="button" class="btn btn-outline-success" (click)="addEquipment(location.locationId)"><i class="material-icons">add</i>Add Equipment</button>
+                                <button type="button" class="btn btn-outline-info" (click)="editLocation(location.locationId)"><i class="material-icons">edit</i>Edit Location</button>
+                                <button type="button" class="btn btn-outline-danger" (click)="deleteLocation(location.locationId)"><i class="material-icons">delete</i>Remove Location</button>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>           
+                
+                <!-- Equipments -->
+
+                <div class="row" *ngFor="let equipment of location.equipments.value | async">
+                    <div>
+                        <div class="card">
+                            <h3 class="equipment-title">Equipment: {{equipment.name}}</h3>
+
+                            <div class="mt-0">
+                                <div class="equipment-type" *ngIf="(equipment.type === 0 && equipment.subType !== 3) || (equipment.type === 1 && equipment.subType !== 6)">
+                                    <h2>Equipment Type / Sub Type</h2>
+                                    <h2 class="field-detail"> {{equipment.type | equipmentTypes}} / {{equipment.type === 0 ? (equipment.subType | boilerSubTypes) : (equipment.subType | vesselSubTypes)}}</h2>
+                                </div>
+                                <div class="equipment-type" *ngIf="(equipment.type === 0 && equipment.subType === 3) || (equipment.type === 1 && equipment.subType === 6)">
+                                    <h2>Equipment Type / Sub Type</h2>
+                                    <h2 class="field-detail"> {{equipment.type | equipmentTypes}} / {{equipment.subTypeName}}</h2>
+                                </div>
+                                <div class="equipment-date">
+                                    <h2>Equipment Date</h2>
+                                    <h2 class="field-detail">{{equipment.equipmentDate ? (equipment.equipmentDate | date:'MM/dd/yyyy') : '-'}}</h2>
+                                </div>
+                                <div class="equipment-scope">
+                                    <h2>Scope Description</h2>
+                                    <h2 class="field-detail">{{equipment.scopeDescription ? equipment.scopeDescription : '-'}}</h2>
+                                </div>
+                                <div class="equipment-field-button-container">
+                                    <button type="button" class="btn btn-outline-success" (click)="addArea(equipment.equipmentId, equipment.type, equipment.locationId)"><i class="material-icons">add</i>Add Area</button>
+                                    <button type="button" class="btn btn-outline-info" (click)="editEquipment(equipment.equipmentId, equipment.locationId)"><i class="material-icons">edit</i>Edit Equipment</button>
+                                    <button type="button" class="btn btn-outline-danger" (click)="deleteEquipment(equipment.equipmentId, equipment.locationId)"><i class="material-icons">delete</i>Remove Equipment</button>
+                                </div>
+                            </div>
+                            <!-- Areas -->                            
+                            <div class="table-responsive areas-container">
+                                <table class="table table-bordered  table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th class="center">Area</th>
+                                            <th class="center">Elev Unit</th>
+                                            <!-- <th class="center">Elev Increment</th> -->
+                                            <th class="center" *ngIf="equipment.type !== 1">Tube Diameter</th>
+                                            <th class="center" *ngIf="equipment.type !== 1"># of readings per tube</th>                                            
+                                            <th class="center">{{equipment.type === 0 ? 'Tubes Start' : 'Area Start'}}</th>                                            
+                                            <th class="center">{{equipment.type === 0 ? 'Tubes End' : 'Area End'}}</th>                                            
+                                            <th class="center">Ref X</th>
+                                            <th class="center">Ref Y</th>
+                                            <th class="center" *ngIf="(equipment.areas.value | async)?.length > 0"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="(equipment.areas.value | async)?.length == 0">
+                                            <td colspan="9" class="center">No areas found</td>
+                                        </tr>
+                                        <tr *ngFor="let area of equipment.areas.value | async">
+                                            <td class="center">{{area.name}}</td>
+                                            <td class="center">{{area.elevationUnit | elevationUnits}}</td>
+                                            <!-- <td class="center">{{area.elevationIncrement ? area.elevationIncrement : 0}}</td> -->
+                                            <td class="center" *ngIf="equipment.type !== 1">{{area.tubeDiameter ? area.tubeDiameter : 0}} inches</td>
+                                            <td class="center" *ngIf="equipment.type !== 1">{{area.readings ? area.readings : 0}}</td>                                            
+                                            <td class="center">{{area.tubesStart ? area.tubesStart : 0}}</td>                                            
+                                            <td class="center">{{area.tubesEnd ? area.tubesEnd : 0}}</td>                                                                                        
+                                            <td class="center">{{area.referenceX}}</td>
+                                            <td class="center">{{area.referenceY}}</td>
+                                            <td class="center">
+                                                <a class="btn btn-tbl-edit btn-edit" (click)="editArea(area.areaId, area.equipmentId, equipment.type, equipment.locationId)">
+                                                    <i class="material-icons" >edit</i>
+                                                </a>
+                                                <a class="btn btn-tbl-edit btn-delete" (click)="deleteArea(area.areaId, area.equipmentId, equipment.locationId)">
+                                                    <i class="material-icons" >delete</i>
+                                                </a>
+                                            </td>
+                                        </tr>                                                           
+                                    </tbody>
+                                
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</section>

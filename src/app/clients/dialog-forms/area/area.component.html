@@ -1,0 +1,126 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Area</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #areaForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Area Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.name" name="areaName" required>                                                    
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Elevation Unit</mat-label>
+                                                        <mat-select name="elevationUnit" [(ngModel)]="model.elevationUnit" required>                                                          
+                                                          <mat-option *ngFor="let unit of elevationUnitKeys" [value]="unit">
+                                                            {{unit | elevationUnits}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col" *ngIf="equipmentType !== 1">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Elevation Increment</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.elevationIncrement" [disabled]="equipmentType === 1" name="elevationIncrement" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div> -->
+                                    </div>                                                                       
+                                    <div class="row clearfix row-container" *ngIf="equipmentType !==1">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Tube Diameter</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.tubeDiameter" name="tubeDiameter" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container" *ngIf="equipmentType !==1">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label># of readings per tube</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.readings" name="readings" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>{{equipmentType === 0 ? 'Tubes Start' : 'Area Start'}}</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.tubesStart" name="tubesStart" min="1" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>{{equipmentType === 0 ? 'Tubes End' : 'Area End'}}</mat-label>
+                                                    <input matInput type="number" [(ngModel)]="model.tubesEnd" name="tubesEnd" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <h6>Point of Reference X / Y</h6>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">                                                
+                                                <mat-form-field class="example-full-width" appearance="fill">                                                    
+                                                    <input matInput type="text" name="referenceX" [(ngModel)]="model.referenceX" required>                                                                                                        
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-field col s12">                                                
+                                                <mat-form-field class="example-full-width" appearance="fill">                                                    
+                                                    <input matInput type="text" name="referenceY" [(ngModel)]="model.referenceY" required>                                                                                                        
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="model" [disabled]="!areaForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

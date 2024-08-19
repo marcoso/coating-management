@@ -1,0 +1,26 @@
+.btn-info {
+    background-color: #f99d26 !important;
+    color: #fff !important;
+    border-color: #f99d26 !important;
+    margin: 0.5em;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #e0840e !important;
+    border-color: #e0840e !important;
+}
+
+.btn-danger {    
+    margin: 0.5em;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+}
+
+.wizard > .content {    
+    min-width: 500px;
+}

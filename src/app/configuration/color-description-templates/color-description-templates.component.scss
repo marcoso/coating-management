@@ -1,0 +1,151 @@
+.btn, .btn-large, .btn-small, .btn-flat {
+    border: 0;
+    border-radius: 2px;
+    display: inline-block;    
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:not(.btn-link):not(.btn-circle) {
+    box-shadow: 0 2px 5px rgb(0 0 0 / 16%), 0 2px 10px rgb(0 0 0 / 12%);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    border: 0;
+    font-size: 13px;
+    outline: 0;
+}
+
+.btn-outline-info {
+    background: 0 0 !important;
+    color: #00b0e4 !important;
+    border: 1px solid #00b0e4 !important;
+}
+
+.btn-outline-info:hover {
+    background: #00b0e4 !important;
+    color: #fff !important;
+    border: 1px solid #00b0e4 !important;
+}
+
+.btn-outline-success {
+    background: 0 0 !important;
+    color: #18ce0f !important;
+    border: 1px solid #18ce0f !important;
+}
+
+.btn-outline-success:hover {
+    background: #18ce0f !important;
+    color: #fff !important;
+    border: 1px solid #18ce0f !important;
+}
+
+.sub-title {
+    color: #337ab7;
+    font-size: 18px;
+    margin-left: 16px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.btn-add-color-template {
+    margin-top: -58px;
+    margin-left: 315px;
+    height: 30px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 11px !important;
+}
+
+.icon-add-template {
+    font-size: 11px;
+    margin-right: 5px;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.template-name {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.btn-edit-color-template {    
+    height: 30px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 11px !important;    
+    margin-left: 10px;
+}
+
+.icon-edit-color-template {
+    font-size: 11px;
+    margin-right: 5px;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.btn-delete-color-template {
+    height: 30px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 11px !important;
+    margin-left: 10px;
+}
+
+.icon-delete-color-template {
+    font-size: 11px;
+    margin-right: 5px;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.btn-add-parameter {
+    margin-top: -1px;
+    margin-left: 60px;
+    height: 30px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 11px !important;
+}
+
+.icon-add-parameter {
+    font-size: 11px;
+    margin-right: 5px;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.parameter-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+    margin-left: 40%;
+}
+
+.parameter-title{
+    font-size: 14px;
+    margin-top: -10px;
+    margin-left: 60px;
+}
+
+.add-parameter-container{
+    width: 70%;
+    float: left;
+    margin-top: 10px;
+}
+
+.parameters-container{
+    margin-left: 60px;
+    width: 80%;
+    margin-top:10px
+}
+
+.parameter-color-container{
+    float: left;
+    text-align: center;
+    width: 100%;
+}

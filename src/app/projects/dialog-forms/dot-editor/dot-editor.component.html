@@ -1,0 +1,63 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #measureEditForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="tooltip-item title">
+                                    <h2>Measurement Details</h2>
+                                </div>
+                                <div class="row unit-container">
+                                    <div class="col">
+                                        <h2>Measurement ({{project.measurementUnit | measurementUnit}}): <b>&nbsp;&nbsp;</b></h2>
+                                        <mat-form-field appearance="fill">                                            
+                                            <input matInput type="number" min="0" [(ngModel)]="measurement.value" name="measure" required>                                                    
+                                        </mat-form-field>
+                                    </div>                                    
+                                </div>
+                                <div class="tooltip-item" *ngIf="projectEquipment.type === 0">
+                                    <h2>Tube Number: <b>&nbsp;&nbsp;{{tubeNumber}} {{getSection()}}</b></h2>
+                                </div>
+                                <div class="tooltip-item" *ngIf="projectEquipment.type === 1">
+                                    <h2>Area Number: <b>&nbsp;&nbsp;{{tubeNumber}}</b></h2>
+                                </div>
+                                <div class="tooltip-item">
+                                    <h2>Elevation: <b>&nbsp;&nbsp;{{measurement.elevation}}</b></h2>
+                                </div>
+                                <div class="tooltip-item" *ngIf="measurement.measurementDateTime">
+                                    <h2>Date/Time: <b>&nbsp;&nbsp;{{measurement.measurementDateTime | date:'MM/dd/yyyy'}}</b></h2>
+                                </div>
+                                <div class="tooltip-item">
+                                    <h2>File name: <b>&nbsp;&nbsp;{{projectArea.filename}}</b></h2>
+                                </div>
+                                <hr>
+                                <div class="tooltip-item title">
+                                    <h2>Previous Measurements</h2>
+                                </div>                                
+                                <div *ngIf="(previousMeasurements.value | async)?.length === 0">
+                                    No previous measurements found
+                                </div>
+                                <div *ngIf="(previousMeasurements.value | async)?.length > 0">
+                                    <div class="tooltip-item previous-measurement" *ngFor="let previousMeasurement of previousMeasurements.value | async">
+                                        <h2>{{previousMeasurement.updatedAt | date:'MM/dd/yyyy'}}: <b>&nbsp;&nbsp;{{previousMeasurement.value}} {{project.measurementUnit | measurementUnit}}</b></h2>
+                                    </div>
+                                </div>                                                                
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="button" class="btn btn-outline-danger btn-disable-dot" *ngIf="measurement.projectAreaMeasurementId" (click)="disableDot()"><i class="material-icons">do_not_disturb</i>{{this.measurement.status === 0 ? 'Disable' : 'Enable'}}</button>    
+                                <button type="submit" [mat-dialog-close]="measurement" [disabled]="!measureEditForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div>                         
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

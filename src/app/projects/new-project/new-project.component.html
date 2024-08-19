@@ -1,0 +1,272 @@
+<section class="content">
+    <div class="container-fluid">        
+        <div class="card">
+            <div class="header">
+                <h2>New <b>Project</b></h2>
+            </div>
+            <div class="body">
+                <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="stepSelectionChange($event)">
+                    <mat-step [stepControl]="projectDetailsForm">
+                        <form #projectDetailsForm="ngForm">
+                            <ng-template matStepLabel>Project Details</ng-template>
+                            <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                                <div class="content clearfix">
+                                    <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                        <div class="controls-container-half">
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col s12">
+                                                        <div class="select-wrapper">                                                    
+                                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                                <mat-label>Client</mat-label>
+                                                                <mat-select #clientId name="clientId" [(ngModel)]="model.clientId" (selectionChange)="clientChange($event)" required>                                                          
+                                                                  <mat-option *ngFor="let client of clients | async" [value]="client.clientId">
+                                                                    {{client.name}}
+                                                                  </mat-option>                                                          
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col s12">
+                                                        <mat-form-field class="example-full-width" appearance="fill">
+                                                            <mat-label>Project Name</mat-label>
+                                                            <input #name matInput [(ngModel)]="model.name" name="name" required>                                                    
+                                                          </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col s12">
+                                                        <div class="select-wrapper">                                                    
+                                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                                <mat-label>Location</mat-label>
+                                                                <mat-select #locationId name="locationId" [(ngModel)]="model.locationId" (selectionChange)="locationChange($event)" required>                                                          
+                                                                  <mat-option *ngFor="let location of locations.value | async" [value]="location.locationId">
+                                                                    {{location.name}}
+                                                                  </mat-option>                                                          
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col s12">
+                                                        <div class="select-wrapper">                                                    
+                                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                                <mat-label>Measurement Unit</mat-label>
+                                                                <mat-select #measurementUnitDropdown name="measurementUnit" [(ngModel)]="model.measurementUnit" required>                                                          
+                                                                  <mat-option *ngFor="let unit of measurementUnitKeys" [value]="unit">
+                                                                    {{unit | measurementUnit}}
+                                                                  </mat-option>                                                          
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col s12">
+                                                        <div class="select-wrapper">                                                    
+                                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                                <mat-label>Report Type</mat-label>
+                                                                <mat-select #reportTypeDropdown name="reportType" [(ngModel)]="model.reportType" required>                                                          
+                                                                  <mat-option *ngFor="let reportType of reportTypeKeys" [value]="reportType">
+                                                                    {{reportType| reportTypePipe}}
+                                                                  </mat-option>                                                          
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix row-container">
+                                                <div class="col-sm-12">
+                                                    <div class="input-field col">
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Start Date</mat-label>
+                                                            <input matInput #startDate name="startDate" [(ngModel)]="model.startDate" [matDatepicker]="startDatePicker" appDateSelector required>
+                                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                                          </mat-form-field>
+                                                    </div>
+                                                    <div class="input-field col">
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Finish Date</mat-label>
+                                                            <input matInput #endDate name="endDate" [(ngModel)]="model.endDate" [matDatepicker]="endDatePicker" appDateSelector required>
+                                                            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #endDatePicker></mat-datepicker>
+                                                          </mat-form-field>
+                                                    </div>
+                                                    <div class="input-field col">
+                                                        <div class="select-wrapper">                                                    
+                                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                                <mat-label>Project Status</mat-label>
+                                                                <mat-select name="projectStatus" [(ngModel)]="model.status" required>                                                          
+                                                                  <mat-option *ngFor="let statusKey of projectStatusKeys" [value]="statusKey">
+                                                                    {{statusKey | projectStatus}}
+                                                                  </mat-option>                                                          
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="team-members-container">
+                                            <h3 class="title">Team Members</h3>
+                                            <div *ngFor="let user of selectedUsers" class="member-container">
+                                                <div class="left-div">
+                                                    <i class="material-icons">check_circle</i>
+                                                </div>
+                                                <div class="right-div">
+                                                    <h3>{{user.firstName}} {{user.lastName}} <b>({{user.role | userRoles}})</b></h3>
+                                                </div>
+                                            </div>
+                                            <div class="btn-left">
+                                                <button type="button" class="btn btn-outline-success" (click)="addTeamMembers()"><i class="material-icons">add</i>Add Team Member</button>
+                                            </div>
+                
+                                        </div> 
+                                    </section>
+                                </div>
+                                <div class="row clearfix button-container">
+                                    <div>
+                                        <button matStepperNext [disabled]="!projectDetailsForm.valid" class="btn btn-info waves-effect float-end">                                        
+                                            <span>Next</span>
+                                        </button>
+                                    </div>
+                                </div>                                 
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="projectEquipmentForm">
+                      <form #equipmentSelectionForm="ngForm" [formGroup]="projectEquipmentForm" class="equipment-content">
+                        <ng-template matStepLabel>Select Equipment</ng-template>
+                        <div id="wizard_horizontal" role="application" class="wizard clearfix">                            
+                            <div class="content clearfix">
+                                <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">
+                                    <h3>Please specify all equipment and areas to be inspected during this project:</h3>
+                                    <div class="equipment-container">
+                                        <div *ngFor="let equipment of equipments.value | async" class="row clearfix row-container">
+                                            <div class="col-sm-12">
+                                                <div class="input-field col s12">
+                                                    <div class="select-wrapper">                                                                                                            
+                                                        <mat-slide-toggle [checked]="equipmentsSet.get(equipment.equipmentId)" (change)="equipmentSelectionChange($event, equipment.equipmentId, areasCheckList)" [disabled]="false">
+                                                            <b>{{equipment.name}}</b> ({{equipment.type | equipmentTypes}} / {{equipment.type === 0 ? (equipment.subType | boilerSubTypes) : (equipment.subType | vesselSubTypes)}})
+                                                        </mat-slide-toggle>
+                                                        <mat-selection-list #areasCheckList [id]="equipment.equipmentId" class="text-nowrap" (selectionChange)="areaSelectionChange($event, equipment.equipmentId)" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                                                            <mat-list-option *ngFor="let area of equipment.areas.value | async" checkboxPosition="before" [value]="area.areaId" [selected]="areaIsSelected(area.areaId, equipment.equipmentId)">
+                                                              <span>{{area.name}}</span>
+                                                            </mat-list-option>
+                                                          </mat-selection-list>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row clearfix button-container">
+                                <div>
+                                    <button matStepperNext class="btn btn-info waves-effect float-end">                                        
+                                        <span>Next</span>
+                                    </button>
+                                    <button matStepperPrevious class="btn btn-info waves-effect float-end">                                        
+                                    <span>Previous</span>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                      </form>
+                    </mat-step>
+                    <mat-step>
+                        <form #colorDescriptionSelectionForm="ngForm" [formGroup]="colorDescriptiontForm" class="equipment-content">
+                            <ng-template matStepLabel>Color Descriptions</ng-template>
+                            <div id="wizard_horizontal" role="application" class="wizard clearfix">                            
+                                <div class="content clearfix">
+                                    <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">
+                                        <h3>Please assign the color descriptions to each selected equipment:</h3>
+                                        <div *ngFor="let equipment of selectedEquipments" class="row">
+                                            <div class="equipment-template-container">
+                                                <div class="row clearfix row-container">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-field col s12">
+                                                            <div class="select-wrapper">                                                                  
+                                                                  <mat-form-field class="example-full-width" appearance="fill">
+                                                                    <mat-label class="equipment-label">{{equipment.name}} <span class="equipment-label-type">({{equipment.type | equipmentTypes}} / {{equipment.type === 0 ? (equipment.subType | boilerSubTypes) : (equipment.subType | vesselSubTypes)}})</span></mat-label>
+                                                                    <mat-select name="{{equipment.equipmentId}}" [formControlName]="equipment.equipmentId" (selectionChange)="templateChange($event, equipment.equipmentId)">                                                          
+                                                                      <mat-option *ngFor="let template of colorDescriptionTemplates | async" [value]="template.colorTemplateId">
+                                                                        {{template.name}}
+                                                                      </mat-option>                                                          
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="color-template-container">
+                                                <div class="col-12">
+                                                    <h3 class="title">Color Descriptions</h3>
+                    
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered  table-hover " *ngIf="(equipmentTemplateSet?.value | async).has(equipment.equipmentId) && (equipmentTemplateSet?.value | async).get(equipment.equipmentId) !== null">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="center">Color</th>
+                                                                    <th class="center">Hex</th>
+                                                                    <th class="center">Range</th>
+                                                                    <th class="center">Reference</th>                                                                    
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>                                                                       
+                                                                <tr *ngFor="let parameter of (equipmentTemplateSet?.value | async).get(equipment.equipmentId)?.parameters">
+                                                                    <td class="center">
+                                                                        <div class="parameter-color-container">
+                                                                            <div [style.background-color]="parameter.color" class="parameter-color"></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="center">
+                                                                        <div>
+                                                                            {{parameter.color}}
+                                                                        </div>                                                        
+                                                                    </td>
+                                                                    <td class="center">{{parameter.minValue | range: parameter.minValue : parameter.maxValue}}</td>                                                                    
+                                                                    <td class="center">{{parameter?.reference}}</td>                                                                    
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </section>
+                                </div>
+                                <div class="row clearfix button-container">
+                                    <div>
+                                        <button class="btn btn-info waves-effect float-end" [disabled]="!colorDescriptiontForm.valid" (click)="saveProject()">                                        
+                                            <span>Finish</span>
+                                        </button>
+                                        <button matStepperPrevious class="btn btn-info waves-effect float-end">                                        
+                                        <span>Previous</span>
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                          </form>
+                    </mat-step>
+                  </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>
+</section>

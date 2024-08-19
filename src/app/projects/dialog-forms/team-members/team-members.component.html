@@ -1,0 +1,41 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Team Members</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #teamMembersForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">                                            
+                                            <app-search (search)="onSearch($event)"></app-search>
+                                            <mat-selection-list #userList (selectionChange)="selectionChange($event)" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" ngDefaultControl>
+                                                <mat-list-option *ngFor="let user of filteredOptions" checkboxPosition="before" [value]="user.userId" [selected]="usersSet.get(user.userId)">
+                                                  <span><b>{{user.firstName}} {{user.lastName}}</b> ({{user.role | userRoles}})</span>
+                                                </mat-list-option>
+                                              </mat-selection-list>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="usersSet" [disabled]="users.length === 0" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

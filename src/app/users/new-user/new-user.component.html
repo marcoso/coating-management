@@ -1,0 +1,112 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					New <b>User</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #userForm="ngForm" autocomplete="off">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container-half">
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.firstName" name="firstName" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input matInput [(ngModel)]="model.lastName" name="lastName" required>                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-container">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Role</mat-label>
+                                                        <mat-select name="role" [(ngModel)]="model.role" required>                                                          
+                                                          <mat-option *ngFor="let role of roleKeys" [value]="role">
+                                                            {{role | userRoles}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix row-control">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Status</mat-label>
+                                                        <mat-select name="userActive" [(ngModel)]="model.isActive">
+                                                          <mat-option [value]="true" selected>
+                                                            Active
+                                                          </mat-option>
+                                                          <mat-option [value]="false">
+                                                            Inactive
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                      </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>      
+                                    <div class="row clearfix row-control">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Enter your email</mat-label>
+                                                        <input matInput type="email" [(ngModel)]="model.username" name="username" required autocomplete="off">                                                    
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <div class="row clearfix row-control" *ngIf="!model.userId">
+                                        <div class="col-sm-12">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Enter your password</mat-label>
+                                                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="model.password" name="password" required autocomplete="new-password">
+                                                        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                        </button>
+                                                      </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                   
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                            </div>
+                        </div> 
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

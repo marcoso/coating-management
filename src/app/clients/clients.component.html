@@ -1,0 +1,86 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					List of <b>Clients</b>
+				</h2>
+                <div class="new-button">                    
+                    <button class="btn btn-info waves-effect" (click)="newClient()">
+                        <i class="material-icons">add</i>
+                        <span>NEW CLIENT</span>
+                    </button>                                            
+                </div>
+			</div>
+			<div class="body">
+				<div class="table-responsive">                    
+                    <div class="row">                        
+                        <div class="col-sm-12 col-md-12">
+                            <div id="DataTables_Table_0_filter" class="dataTables_filter float-end">
+                                <label>Search:<input type="search" #filter class="browser-default search-field float-end" placeholder="" aria-label="Search box"></label>                                    
+                            </div>
+                        </div>                        
+                    </div>            
+                    <div class="row">                        
+                        <div class="col-sm-12 col-md-12">
+                            <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover dataTable" matSort>
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}}  </td>
+                                </ng-container>
+            
+                                <!-- Total Locations Column -->
+                                <ng-container matColumnDef="totalLocations">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Locations</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.totalLocations}}  </td>
+                                </ng-container>
+                                
+                                <!-- Total Projects Column -->
+                                <ng-container matColumnDef="totalProjects">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Projects</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.totalProjects}}  </td>
+                                </ng-container>
+                                            
+                                <!-- isActive / Status Column -->
+                                <ng-container matColumnDef="isActive">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div *ngIf="element.isActive" class="badge col-blue status-active">ACTIVE</div>							   
+                                        <div *ngIf="!element.isActive" class="badge col-blue status-inactive">INACTIVE</div>
+                                    </td>
+                                </ng-container>
+            
+                                <!-- Detail Column -->
+                                <ng-container matColumnDef="detail">
+                                    <th mat-header-cell *matHeaderCellDef></th>
+                                    <td mat-cell *matCellDef="let element">							
+                                        <a [routerLink]="['/clients/client-detail', element.clientId]" routerLinkActive="active" class="btn btn-tbl-edit btn-edit">
+                                            <i class="material-icons" >remove_red_eye</i>
+                                        </a>
+                                        <a class="btn btn-tbl-edit btn-delete" (click)="deleteClient(element.clientId)">
+                                            <i class="material-icons" >delete</i>
+                                        </a>
+                                    </td>
+                                </ng-container>
+                            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"> </tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+                            </table>
+                            <!-- Loading spinner -->
+                            <div *ngIf="clientService.isClientsDataLoading" class="tbl-spinner">
+                                <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                                </mat-progress-spinner>
+                            </div>
+                            <div *ngIf="!clientService.isClientsDataLoading" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'" class="text-center">
+                                No results
+                            </div>
+                            <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+                            </mat-paginator>
+                        </div>
+                    </div>			
+				</div>				
+			</div>
+		</div>
+	</div>
+</section>

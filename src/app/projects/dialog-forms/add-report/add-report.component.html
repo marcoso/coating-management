@@ -1,0 +1,54 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+            <div class="header">
+				<h2> 
+					Add <b>Report</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #addReportForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container">                                    
+                                    <div class="row clearfix row-container">
+                                        <div class="col">
+                                            <div class="input-field col s12">
+                                                <div class="select-wrapper">                                                    
+                                                    <mat-form-field class="example-full-width" appearance="fill">
+                                                        <mat-label>Project</mat-label>
+                                                        <mat-select name="project" [(ngModel)]="model.projectId" required>                                                          
+                                                          <mat-option *ngFor="let project of projects | async" [value]="project.projectId">
+                                                            {{project.name}}
+                                                          </mat-option>                                                          
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix file-container">
+                                        <div class="col">
+                                            <div class="custom-file">
+                                                <input type="file" name="fileUpload" id="fileUpload" accept=".xls,.xlsx" (change)="onFileChange($event)">     
+                                            </div>                                                                          
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </section>
+                        </div>                        
+                        <div class="row clearfix button-container">
+                            <div>                                   
+                                <button type="submit" [mat-dialog-close]="model" [disabled]="!addReportForm.form.valid || !model.file"  class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div>                         
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,304 @@
+<section class="content">
+    <div class="container-fluid">        
+        <div class="card">
+            <div class="header">
+                <h2><b>Project</b> Details</h2>
+                <button type="button" class="btn btn-outline-info" (click)="editProject()">
+                    <i class="material-icons">edit</i>EDIT</button>
+            </div>
+            <div class="body">
+                <div class="row">
+                    <div class="col mt-2">
+                        <h2>Client</h2>
+                        <h2 class="field-detail">{{model.client}}</h2>
+                    </div>
+                    <div class="col mt-2">
+                        <h2>Project</h2>
+                        <h2 class="field-detail">{{model.name}}</h2>
+                    </div>
+                    <div class="col mt-2">
+                        <h2>Location</h2>
+                        <h2 class="field-detail">{{model.location}}</h2>
+                    </div>
+                    <div class="col mt-2">
+                        <h2>Status</h2>
+                        <h2 class="field-detail">                            
+                            <div *ngIf="model.status === status.Pending" class="badge col-blue status-pending">{{model.status | projectStatus}}</div>
+                            <div *ngIf="model.status === status.OnGoing" class="badge col-blue status-ongoing">{{model.status | projectStatus}}</div>
+                            <div *ngIf="model.status === status.Completed" class="badge col-blue status-completed">{{model.status | projectStatus}}</div>
+                            <div *ngIf="model.status === status.Cancelled" class="badge col-blue status-cancelled">{{model.status | projectStatus}}</div>
+                        </h2>
+                    </div>
+                    <div class="col mt-2">
+                        <h2>Last Change</h2>
+                        <h2 class="field-detail">{{ model.updatedAt === null ? '-' : (model.updatedAt && !lastMeasurementUpdate ? model.updatedAt : lastMeasurementUpdate) | date:'MM/dd/yyyy'}}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mt-3">
+                        <h2>Start Date</h2>
+                        <h2 class="field-detail">{{ model.startDate === null ? '-' : model.startDate | date:'MM/dd/yyyy'}}</h2>
+                    </div>
+                    <div class="col mt-3">
+                        <h2>Finish Date</h2>
+                        <h2 class="field-detail">{{ model.endDate === null ? '-' : model.endDate | date:'MM/dd/yyyy'}}</h2>
+                    </div>
+                    <div class="col mt-3">
+                        <h2>Members</h2>
+                        <h2 class="field-detail">{{model.users?.length}}</h2>
+                    </div>                    
+                    <div class="col mt-3">                        
+                        <h2>Measurement Unit</h2>
+                        <h2 class="field-detail">{{ model.measurementUnit | measurementUnit}}</h2>                                                
+                    </div>
+                    <div class="col mt-3">                        
+                        <h2>Report Type</h2>
+                        <h2 class="field-detail">{{ model.reportType | reportTypePipe}}</h2>                                                
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="header">
+                <h2><b>Equipment</b> Details</h2>
+            </div>                
+            <div class="body">
+                <div class="row">                    
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0">
+                        <div class="input-field col s12">
+                            <div class="select-wrapper">                                                    
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-select #equipmentId name="equipmentId" [(ngModel)]="selectedProjectEquipment" (selectionChange)="projectEquipmentChange($event)" required>                                                          
+                                        <mat-option *ngFor="let projectEquipment of model.projectEquipments" [value]="projectEquipment">
+                                            {{projectEquipment.name}}
+                                        </mat-option>                                                          
+                                        </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>                        
+                    <div class="col-2" *ngIf="(selectedProjectEquipment.type === 0 && selectedProjectEquipment.subType !== 3) || (selectedProjectEquipment.type === 1 && selectedProjectEquipment.subType !== 6)">
+                        <h2 class="equipment-type-title">Equipment Type / Sub Type</h2>
+                        <h2 class="equipment-type-value"> {{selectedProjectEquipment.type | equipmentTypes}} / {{selectedProjectEquipment.type === 0 ? (selectedProjectEquipment.subType | boilerSubTypes) : (selectedProjectEquipment.subType | vesselSubTypes)}}</h2>
+                    </div>
+                    <div class="col-2" *ngIf="(selectedProjectEquipment.type === 0 && selectedProjectEquipment.subType === 3) || (selectedProjectEquipment.type === 1 && selectedProjectEquipment.subType === 6)">
+                        <h2 class="equipment-type-title">Equipment Type / Sub Type</h2>
+                        <h2 class="equipment-type-value"> {{selectedProjectEquipment.type | equipmentTypes}} / {{selectedProjectEquipment.subTypeName}}</h2>
+                    </div>                                    
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-warning btn-report" (click)="equipmentReport(selectedProjectEquipment.projectEquipmentId)" [disabled]="!selectedProjectEquipment.equipmentId"><i class="fas fa-file-alt"></i>Equipment Report</button>                                
+                        <button type="button" class="btn btn-outline-success btn-add-equipment" (click)="addEquipment(model.locationId)"><i class="material-icons">add</i>Add Equipment</button>  
+                    </div>                        
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                        <div class="card">                            
+                                <h3 class="area-selection-title">Areas</h3>
+                                <div id="mail-nav">
+                                    <ul class="" id="mail-folders">
+                                        <li *ngFor="let projectArea of projectAreas">
+                                            <a (click)="selectProjectArea(projectArea)">{{projectArea.name}}</a>
+                                        </li>                                        
+                                    </ul>
+                                </div>                                
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10">
+                        <div class="card">
+                            <div class="row section-right">
+                                <div class="col-2 mt-3 p-0">
+                                    <h3 class="selected-area">{{selectedProjectArea.name}} <b>Area</b></h3>                                    
+                                    <h3 class="area-subtitle">Parameters</h3>
+                                </div>
+                                <div class="col-3 mt-3">
+                                    <button type="button" class="btn btn-outline-success btn-add-area" (click)="addArea(selectedProjectEquipment.equipmentId, selectedProjectEquipment.type)" [disabled]="!selectedProjectEquipment.equipmentId"><i class="material-icons">add</i>Add Area</button>  
+                                </div>
+                            </div>                            
+    
+                            <div class="row section-right">
+                                <div class="col mt-3 p-0">
+                                    <h2>Elevation Unit</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.elevationUnit | elevationUnits}} </h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <!-- <h2>Elevation Increment</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.elevationIncrement ? selectedProjectArea.elevationIncrement : 0}}</h2> -->
+                                </div>
+                            </div>
+                            <div class="row section-right" *ngIf="selectedProjectEquipment.type === 0">
+                                <div class="col mt-3 p-0">
+                                    <h2>Tube Diameter</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.tubeDiameter ? selectedProjectArea.tubeDiameter : 0}} inches</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2># of readings per tube</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.readings ? selectedProjectArea.readings : 0}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Tubes Start</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.tubesStart ? selectedProjectArea.tubesStart : 0}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Tubes End</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.tubesEnd ? selectedProjectArea.tubesEnd : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row section-right" *ngIf="selectedProjectEquipment.type === 0">
+                                <div class="col mt-3 p-0">
+                                    <h2>Point of Reference X</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.referenceX}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Point of Reference Y</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.referenceY}}</h2>
+                                </div>
+                            </div>
+                            <div class="row section-right" *ngIf="selectedProjectEquipment.type === 1">                                
+                                <div class="col mt-3 p-0">
+                                    <h2>Area Start</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.tubesStart ? selectedProjectArea.tubesStart : 0}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Area End</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.tubesEnd ? selectedProjectArea.tubesEnd : 0}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Point of Reference X</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.referenceX}}</h2>
+                                </div>
+                                <div class="col mt-3 p-0">
+                                    <h2>Point of Reference Y</h2>
+                                    <h2 class="field-detail">{{selectedProjectArea.referenceY}}</h2>
+                                </div>
+                            </div>
+                            
+                            <div class="enable-dot">
+                                <button type="button" class="btn btn-outline-info" [disabled]="selectedDots.length === 0" (click)="disableSelectedDots()"><i class="material-icons">edit</i>Enable/Disable Dots</button>                                
+                            </div>
+
+                            <div class="row section-right">
+                                <div class="col-2 mt-3 p-0">
+                                    <h3 class="measurements-title">Measurements</h3>
+                                </div>
+                                <div class="col-3 mt-3">
+                                    <button type="button" class="btn btn-outline-success btn-add-measurement" (click)="addMeasurement()" [disabled]="!selectedProjectEquipment.equipmentId">
+                                        <i class="material-icons">add</i>ADD MEASUREMENT</button>  
+                                </div>
+                            </div>
+
+                            <div class="boxs mail_listing grid-container" *ngIf="headerTubes.length > 0">                                
+                                <div class="inbox-center table-responsive" #containerDiv >                                    
+                                    <div class="g-main">
+                                        <ngx-selecto
+                                            #selecto
+                                            dragContainer=".elements"
+                                            [selectableTargets]='[".selecto-area .g-cell"]'
+                                            [hitRate]='100'
+                                            [selectByClick]='false'
+                                            [selectFromInside]='true'
+                                            [toggleContinueSelect]='["shift"]'
+                                            [ratio]='0'
+                                            (select)="onSelect($event)"
+                                        ></ngx-selecto>                                        
+                                        <div class="elements selecto-area" id="selecto1" #scroller>
+                                            <div *ngIf="selectedProjectEquipment.type === 0" class="h-main1">
+                                                <div class="h-title">Tube #</div>
+                                                <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube' : (selectedProjectArea.readings === 2 ? 'h-tube2' : 'h-tube3')}}">{{colIndex + 1}}</div>
+                                            </div>                                    
+                                            <div class="h-main2" *ngIf="selectedProjectEquipment.type === 0 && selectedProjectArea.readings === 2">
+                                                <div class="h-title">&nbsp;</div>
+                                                <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube-cell' : (selectedProjectArea.readings === 2 ? 'h-tube2-cell' : 'h-tube3-cell')}}">
+                                                    <div class="h-tube-num" *ngFor="let section of tubeSections; let sectionIndex = index">{{sectionIndex === 0 ? 'L' : 'R'}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="h-main2" *ngIf="selectedProjectEquipment.type === 0 && selectedProjectArea.readings === 3">
+                                                <div class="h-title">&nbsp;</div>
+                                                <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube-cell' : (selectedProjectArea.readings === 2 ? 'h-tube2-cell' : 'h-tube3-cell')}}">
+                                                    <div class="h-tube-num" *ngFor="let section of tubeSections; let sectionIndex = index">{{sectionIndex === 0 ? 'L' : (sectionIndex === 1 ? 'C' : 'R')}}</div>
+                                                </div>
+                                            </div>                                                                            
+                                            <div *ngIf="selectedProjectEquipment.type === 1" class="h-main1">
+                                                <div class="h-title right-border"></div>
+                                                <div class="h-tube-vessel" style="width: calc((50px * {{headerTubes.length}}) + 140px);">{{selectedProjectArea.referenceX}}</div>
+                                            </div>
+                                            <div *ngIf="selectedProjectEquipment.type === 1" class="grid-content">                                            
+                                                <div class="h-title-left vertical-text" style="height: calc(30px * {{headerElevations.length}});">{{selectedProjectArea.referenceY}}</div>                                                                                
+                                            </div>
+                                            <div class="grid-content">
+                                                <div class="h-title-left" *ngFor="let headerElevation of headerElevations; let rowIndex = index">{{headerElevation > 0 ? headerElevation : ''}}</div>                                                                                                                                
+                                            </div>
+                                            <div class="grid-content" *ngIf="selectedProjectEquipment.type === 0 && selectedProjectArea.readings === 1">
+                                                <div class="g-row" *ngFor="let headerElevation of headerElevations; let rowIndex = index">                                                    
+                                                    <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube-cell' : (selectedProjectArea.readings === 2 ? 'h-tube2-cell' : 'h-tube3-cell')}}">
+                                                        <div 
+                                                        class="g-cell"
+                                                        [id]="getMeasurementId(headerElevation, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart) | async"                                                         
+                                                        *ngFor="let section of tubeSections; let sectionIndex = index" 
+                                                        [style.background-color]="getCellColor(headerElevation, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart) | async" 
+                                                        (click)="clickDot(headerElevation, colIndex + 1, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart, selectedProjectArea.projectAreaId)">
+                                                        {{getMeasureValue(headerElevation, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart) | async}}</div>
+                                                    </div>                                    
+                                                </div>
+                                            </div>
+                                            <div class="grid-content" *ngIf="selectedProjectEquipment.type === 0 && selectedProjectArea.readings === 2">
+                                                <div class="g-row" *ngFor="let headerElevation of headerElevations; let rowIndex = index">                                                    
+                                                    <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube-cell' : (selectedProjectArea.readings === 2 ? 'h-tube2-cell' : 'h-tube3-cell')}}">
+                                                        <div 
+                                                        class="g-cell"
+                                                        [id]="getMeasurementId(headerElevation, colIndex + 1 + (sectionIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async"                                                        
+                                                        *ngFor="let section of tubeSections; let sectionIndex = index" 
+                                                        [style.background-color]="getCellColor(headerElevation, colIndex + 1 + (sectionIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async" 
+                                                        (click)="clickDot(headerElevation, colIndex + 1 + (sectionIndex + colIndex), colIndex + 1, sectionIndex, selectedProjectArea.tubesStart, selectedProjectArea.projectAreaId)">
+                                                        {{getMeasureValue(headerElevation, colIndex + 1 + (sectionIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async}}</div>                                                        
+                                                    </div>                                    
+                                                </div>
+                                            </div>
+                                            <div class="grid-content" *ngIf="selectedProjectEquipment.type === 0 && selectedProjectArea.readings === 3">
+                                                <div class="g-row" *ngFor="let headerElevation of headerElevations; let rowIndex = index">                                                    
+                                                    <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="{{selectedProjectArea.readings === 1 ? 'h-tube-cell' : (selectedProjectArea.readings === 2 ? 'h-tube2-cell' : 'h-tube3-cell')}}">
+                                                        <div 
+                                                        class="g-cell"
+                                                        [id]="getMeasurementId(headerElevation, colIndex + 1 + (sectionIndex + colIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async"                                                        
+                                                        *ngFor="let section of tubeSections; let sectionIndex = index" 
+                                                        [style.background-color]="getCellColor(headerElevation, colIndex + 1 + (sectionIndex + colIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async" 
+                                                        (click)="clickDot(headerElevation, colIndex + 1 + (sectionIndex + colIndex + colIndex), colIndex + 1, sectionIndex, selectedProjectArea.tubesStart, selectedProjectArea.projectAreaId)">
+                                                        {{getMeasureValue(headerElevation, colIndex + 1 + (sectionIndex + colIndex + colIndex), sectionIndex, selectedProjectArea.tubesStart) | async}}</div>
+                                                    </div>                                    
+                                                </div>
+                                            </div>
+                                            <div class="grid-content" *ngIf="selectedProjectEquipment.type === 1">
+                                                <div class="g-row" *ngFor="let headerElevation of headerElevations; let rowIndex = index">                                                    
+                                                    <div *ngFor="let headerTube of headerTubes; let colIndex = index" class="h-tube-cell">
+                                                        <div 
+                                                        class="g-cell"
+                                                        [id]="getMeasurementId(headerElevation, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart) | async"                                                        
+                                                        [style.background-color]="getCellColor(headerElevation, colIndex + 1 , sectionIndex, selectedProjectArea.tubesStart) | async" 
+                                                        (click)="clickDot(headerElevation, colIndex + 1, colIndex + 1, sectionIndex, selectedProjectArea.tubesStart, selectedProjectArea.projectAreaId)">
+                                                        {{getMeasureValue(headerElevation, colIndex + 1 , sectionIndex, selectedProjectArea.tubesStart) | async}}</div>                                                        
+                                                    </div>                                                    
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="color-descriptions">Color Descriptions</h3>                            
+
+                            <div class="color-descriptions-title-container">
+                                <div class="container-params">
+                                    <h2>Parameters</h2>
+                                    <h2 class="field-detail" *ngFor="let parameter of projectColorTemplateParams"><div [style.background-color]="parameter.color" class="parameter-value"></div>{{parameter.minValue | range: parameter.minValue : parameter.maxValue}}</h2>                                    
+                                </div>
+                                <div class="container-ref">
+                                    <h2>Reference</h2>
+                                    <h2 class="field-detail" *ngFor="let parameter of projectColorTemplateParams"><div *ngIf="parameter.reference" [style.background-color]="parameter.color" class="parameter-ref-value"></div>{{parameter.reference}}</h2>                                    
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+    </div>
+</section>

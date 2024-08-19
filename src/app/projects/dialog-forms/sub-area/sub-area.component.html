@@ -1,0 +1,100 @@
+<section class="content">
+	<div class="container-fluid">		
+		<div class="card">
+			<div class="header">
+				<h2> 
+					{{dialogTitle}} <b>Measurement</b>
+				</h2>
+			</div>
+			<div class="body">
+                <form (ngSubmit)="onSubmit()" #subareaForm="ngForm">
+                    <div id="wizard_horizontal" role="application" class="wizard clearfix">
+                        <div class="content clearfix">
+                            <section id="wizard_horizontal-p-0" role="tabpanel" class="body current">           
+                                <div class="controls-container" *ngFor="let area of model; let areaIndex = index">
+                                     <div class="row clearfix section-right my-4">
+                                        <div class="col-4 mt-3 p-0">
+                                            <h3 class="area-control">{{area.name}}</h3>
+                                        </div>
+                                        <div class="col-5 mt-3">
+                                            <button type="button" class="btn btn-outline-success btn-add-subarea" (click)="addSubarea(area)">
+                                                <i class="material-icons">add</i>ADD SUB AREA</button>  
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngFor="let subarea of getSubAreasByArea(area) | async; let subareaIndex = index">
+                                        <div class="col-1 check-box-col">
+                                            <mat-checkbox [(ngModel)]="subarea.isBlank" name="isBlank{{areaIndex}}{{subareaIndex}}" ngDefaultControl>Is Blank</mat-checkbox>                                            
+                                        </div> 
+                                        <div class="col-2">
+                                            <div class="input-field">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Sub Area Name</mat-label>
+                                                    <input matInput [(ngModel)]="subarea.name" name="subareaName{{areaIndex}}{{subareaIndex}}" [required]="!subarea.isBlank">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-2">
+                                            <div class="input-field">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>From batch</mat-label>
+                                                    <input matInput [(ngModel)]="subarea.batchStart" type="number" name="batchStart{{areaIndex}}{{subareaIndex}}" min="0" oninput="validity.valid||(value='');" value="{{subarea.isBlank ? 0 : ''}}" [readonly]="subarea.isBlank" [required]="!subarea.isBlank">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-field">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>to</mat-label>
+                                                    <input matInput [(ngModel)]="subarea.batchEnd" type="number" name="batchEnd{{areaIndex}}{{subareaIndex}}" min="0" oninput="validity.valid||(value='');" value="{{subarea.isBlank ? 0 : ''}}" [readonly]="subarea.isBlank" [required]="!subarea.isBlank">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-field">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Elevation Start</mat-label>
+                                                    <input matInput [(ngModel)]="subarea.elevationStart" type="number" name="elevationStart{{areaIndex}}{{subareaIndex}}" min="0" value="{{subarea.isBlank ? 0 : ''}}" [readonly]="subarea.isBlank" [required]="!subarea.isBlank">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-field">
+                                                <mat-form-field class="example-full-width" appearance="fill">
+                                                    <mat-label>Elevation End</mat-label>
+                                                    <input matInput [(ngModel)]="subarea.elevationEnd" type="number" name="elevationEnd{{areaIndex}}{{subareaIndex}}" min="0" value="{{subarea.isBlank ? 0 : ''}}" [readonly]="subarea.isBlank" [required]="!subarea.isBlank">                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 remove-icon-col">
+                                            <a class="btn btn-tbl-edit" (click)="deleteSubarea(subarea.subAreaId)">
+                                                <i class="material-icons" >delete</i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix file-container">
+                                        <div class="col-4">
+                                            <div class="custom-file">
+                                                <input type="file" name="fileUpload{{areaIndex}}" class="custom-file-input" id="customFile{{areaIndex}}" accept=".xls,.xlsx" (change)="onFileChange($event, area.projectAreaId)">                                    
+                                            </div>  
+                                        </div>
+                                        <div class="col-6 align-bottom filename-container" *ngIf="area.filename">
+                                            <h2>Imported File: <b>&nbsp;&nbsp;{{area.filename}}</b></h2>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </section>
+                        </div>
+                        <div class="row clearfix button-container">
+                            <div>
+                                <button type="submit" [mat-dialog-close]="configurationModel" [disabled]="!subareaForm.form.valid || subAreas.length === 0 || projectAreaFileSet.size === 0" class="btn btn-info waves-effect float-end">                                        
+                                    <span>Save</span>
+                                </button>  
+                                <button type="button" class="btn btn-danger waves-effect float-end" (click)="cancelClick()">Cancel</button>
+                            </div>
+                        </div>  
+                    </div>
+                </form>                	                               
+			</div>
+		</div>
+	</div>
+</section>
